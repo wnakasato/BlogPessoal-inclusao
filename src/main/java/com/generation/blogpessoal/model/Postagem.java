@@ -1,11 +1,13 @@
 package com.generation.blogpessoal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table (name = "tb_postagens")
@@ -24,8 +26,21 @@ public class Postagem {
     @Size(min = 10, max = 1000, message = "p atributo texto deve conter no minimo 10 e no maximo 1000 caracteres"  )
     private String texto;
 
+    @ManyToOne
+    @JsonIgnoreProperties("postagem")
+    private Tema tema;
+
     @UpdateTimestamp
     private LocalDateTime data;
+
+    public Tema getTema() {
+        return tema;
+    }
+
+    public void setTema(Tema tema) {
+        this.tema = tema;
+    }
+
 
     public long getId() {
         return id;
